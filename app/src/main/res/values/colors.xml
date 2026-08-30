@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="progress_bar_color">@color/button_background</color>
+    <color name="progress_bar_background">#984527A0</color>
+    <!--    #80000000-->
+    <color name="white">#FFFFFFFF</color>
+    <color name="important_text_background">#FFE082</color>
+    <color name="important_text_color">#D50000</color>
+    <color name="print_button_background">#EF5350</color>
+    <color name="error_dialog_background">#EF5350</color>
+    <color name="normal_dialog_background">#FFFFFF</color>
+    <color name="material_100_violet">#C5CAE9</color>
+    <color name="material_400_violet">#7E57C2</color>
+    <color name="material_500_violet">#673AB7</color>
+    <color name="material_800_violet">#4527A0</color>
+    <color name="un_selected_item_background">#FFFFFFFF</color>
+    <color name="selected_item_background">@color/material_100_violet</color>
+    <color name="button_background">#eeeeee</color>
+</resources>

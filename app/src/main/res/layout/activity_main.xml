@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activityMain"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="MainActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="@fraction/toolbar_height_percent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitleCentered="true"
+        app:subtitleTextColor="@color/white"
+        app:title="@string/app_name" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutMainContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:insetLeft="1dp"
+            android:insetTop="1dp"
+            android:insetRight="1dp"
+            android:insetBottom="1dp"
+            android:textSize="@dimen/main_screen_button_font_size"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:insetLeft="1dp"
+            android:insetTop="1dp"
+            android:insetRight="1dp"
+            android:insetBottom="1dp"
+            android:textSize="@dimen/main_screen_button_font_size"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:insetLeft="1dp"
+            android:insetTop="1dp"
+            android:insetRight="1dp"
+            android:insetBottom="1dp"
+            android:textSize="@dimen/main_screen_button_font_size"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:insetLeft="1dp"
+            android:insetTop="1dp"
+            android:insetRight="1dp"
+            android:insetBottom="1dp"
+            android:textSize="@dimen/main_screen_button_font_size"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:insetLeft="1dp"
+            android:insetTop="1dp"
+            android:insetRight="1dp"
+            android:insetBottom="1dp"
+            android:textAlignment="center"
+            android:textSize="@dimen/main_screen_button_font_size"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button6"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:insetLeft="1dp"
+            android:insetTop="1dp"
+            android:insetRight="1dp"
+            android:insetBottom="1dp"
+            android:textSize="@dimen/main_screen_button_font_size"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button7"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:insetLeft="1dp"
+            android:insetTop="1dp"
+            android:insetRight="1dp"
+            android:insetBottom="1dp"
+            android:textSize="@dimen/main_screen_button_font_size"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button8"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:insetLeft="1dp"
+            android:insetTop="1dp"
+            android:insetRight="1dp"
+            android:insetBottom="1dp"
+            android:textSize="@dimen/main_screen_button_font_size"
+            android:textStyle="bold" />
+
+        <androidx.constraintlayout.helper.widget.Flow
+            android:id="@+id/flow"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="button1,button2,button3,button4,button5,button6,button7,button8"
+            app:flow_horizontalGap="1dp"
+            app:flow_maxElementsWrap="2"
+            app:flow_verticalGap="1dp"
+            app:flow_wrapMode="chain"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

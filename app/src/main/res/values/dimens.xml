@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <fraction name="progress_bar_height_percent">0.25</fraction>
+    <fraction name="toolbar_height_percent">0.1</fraction>
+    <dimen name="item_spacing">1dp</dimen>
+    <dimen name="normal_padding">4dp</dimen>
+    <dimen name="pin_activity_view_size">72dp</dimen>
+    <dimen name="small_font_size">14sp</dimen>
+    <dimen name="button_font_size">20sp</dimen>
+    <dimen name="main_screen_button_font_size">20sp</dimen>
+    <dimen name="normal_font_size">16sp</dimen>
+    <dimen name="medium_font_size">20sp</dimen>
+    <dimen name="large_font_size">24sp</dimen>
+    <dimen name="ultra_large_font_size">32sp</dimen>
+    <dimen name="pin_digits_font_size">36sp</dimen>
+    <dimen name="alert_dialog_font_size">24sp</dimen>
+</resources>
