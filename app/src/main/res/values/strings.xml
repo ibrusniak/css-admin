@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name" translatable="false">RCON client</string>
+    <string name="test" translatable="false">Test</string>
 </resources>

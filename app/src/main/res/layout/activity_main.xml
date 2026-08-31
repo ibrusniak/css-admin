@@ -118,6 +118,7 @@
             android:insetTop="1dp"
             android:insetRight="1dp"
             android:insetBottom="1dp"
+            android:text="@string/test"
             android:textSize="@dimen/main_screen_button_font_size"
             android:textStyle="bold" />
 
