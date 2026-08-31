@@ -12,8 +12,8 @@ android {
         applicationId = "com.ibrusniak.app"
         minSdk = 29
         targetSdk = 36
-        versionCode = 1
-        versionName = "1"
+        versionCode = 2
+        versionName = "2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
