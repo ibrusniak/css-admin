@@ -1,4 +1,16 @@
 <resources>
     <string name="app_name" translatable="false">RCON client</string>
     <string name="test" translatable="false">Test</string>
+    <string name="default_command">Default command</string>
+    <string name="settings">Settings</string>
+    <string name="save">Save</string>
+    <string name="sever_ip">Server IP</string>
+    <string name="port">Port</string>
+    <string name="rcon_password">RCON password</string>
+    <string name="please_wait">\"Please wait for the previous command to finish\"</string>
+    <string name="status">Status</string>
+    <string name="bots">Bots</string>
+    <string name="bots_kick_all">Kick all</string>
+    <string name="bots_add_t">+T</string>
+    <string name="bots_add_ct">+ CT</string>
 </resources>

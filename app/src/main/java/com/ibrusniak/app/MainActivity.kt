@@ -2,6 +2,7 @@ package com.ibrusniak.app
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -23,10 +24,13 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    private var isRequestInProgress = false
+
     private lateinit var tvLog: TextView
     private lateinit var scrollLog: ScrollView
     private lateinit var etCommand: TextView
     private lateinit var btnSend: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -42,6 +46,9 @@ class MainActivity : AppCompatActivity() {
         tvLog = findViewById(R.id.tvLog)
         scrollLog = findViewById(R.id.scrollLog)
 
+        tvLog.setHorizontallyScrolling(true)
+        tvLog.movementMethod = null
+
         etCommand = findViewById<EditText>(R.id.etCommand)
         btnSend = findViewById<Button>(R.id.btnSend)
 
@@ -56,6 +63,16 @@ class MainActivity : AppCompatActivity() {
                 true
             } else false
         }
+
+        savedInstanceState?.getString("log_text")?.let { savedLog ->
+            tvLog.text = savedLog
+            scrollLog.post { scrollLog.fullScroll(View.FOCUS_DOWN) }
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+        outState.putString("log_text", tvLog.text.toString())
     }
 
     fun sendCustomCommand(cmd: String) {
@@ -84,6 +101,18 @@ class MainActivity : AppCompatActivity() {
                 sendCustomCommand("Status")
                 true
             }
+            R.id.action_bot_kick_all -> {
+                sendCustomCommand("bot_kick")
+                true
+            }
+            R.id.action_bot_add_t -> {
+                sendCustomCommand("bot_add_t")
+                true
+            }
+            R.id.action_bot_add_ct -> {
+                sendCustomCommand("bot_add_ct")
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -100,16 +129,38 @@ class MainActivity : AppCompatActivity() {
     private fun onExecScriptClick(v: View, scriptName: String) = runRcon("exec $scriptName") { Log.d("RCON", it) }
 
     private fun runRcon(command: String, onResult: (String) -> Unit) {
+        if (isRequestInProgress) {
+            Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT).show()
+            return
+        }
+
         val rcon = getRcon() ?: return
+        isRequestInProgress = true
+        setUiEnabled(false)
+
         lifecycleScope.launch {
             try {
                 val result = rcon.sendCommand(command)
-                onResult(result)
+                if (result == "AUTH_FAILED") {
+                    onResult("❌ fail\nНеверный RCON пароль")
+                } else {
+                    val body = if (result.isNotBlank()) "\n$result" else ""
+                    onResult("✅ successful$body")
+                }
             } catch (e: Exception) {
                 Log.e("RCON", "Ошибка: ${e.message}", e)
-                onResult("Ошибка: ${e.message}")
+                onResult("❌ fail\n${e.message}")
+            } finally {
+                isRequestInProgress = false
+                setUiEnabled(true)
             }
         }
+    }
+
+    private fun setUiEnabled(enabled: Boolean) {
+        findViewById<EditText>(R.id.etCommand).isEnabled = enabled
+        findViewById<Button>(R.id.btnSend).isEnabled = enabled
+        invalidateOptionsMenu() // чтобы пункты тулбар-меню тоже перерисовались с учётом isEnabled ниже
     }
 
     private fun getRcon(): RconClient? {

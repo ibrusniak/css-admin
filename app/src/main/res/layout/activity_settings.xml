@@ -7,41 +7,58 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
-    <LinearLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar2"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="@fraction/toolbar_height_percent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitleCentered="true"
+        app:subtitleTextColor="@color/white"
+        app:title="@string/settings" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/btnSave"
+        android:padding="6dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
         <EditText
             android:id="@+id/etHost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="IP сервера" />
+            android:hint="@string/sever_ip" />
 
         <EditText
             android:id="@+id/etPort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Порт"
+            android:hint="@string/port"
             android:inputType="number" />
 
         <EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="RCON пароль"
+            android:hint="@string/rcon_password"
             android:inputType="textPassword" />
-    </LinearLayout>
 
-    <Button
-        android:id="@+id/btnSave"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Сохранить"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/save" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

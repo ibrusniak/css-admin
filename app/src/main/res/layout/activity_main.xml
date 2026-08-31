@@ -27,7 +27,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:padding="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,25 +35,28 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="4dp">
 
             <EditText
                 android:id="@+id/etCommand"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:hint="default command"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="9"
+                android:hint="@string/default_command"
                 android:imeOptions="actionSend"
                 android:inputType="text"
                 android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btnSend"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="send" />
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:insetBottom="3dp"
+                android:text="➤" />
         </LinearLayout>
 
         <ScrollView
@@ -72,7 +74,7 @@
                 android:padding="8dp"
                 android:text=""
                 android:textColor="#00FF00"
-                android:textSize="12sp" />
+                android:textSize="16sp" />
 
         </ScrollView>
 
