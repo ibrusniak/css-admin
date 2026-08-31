@@ -6,7 +6,11 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
+import android.widget.EditText
+import android.widget.ScrollView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -19,8 +23,10 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var button8: Button
-
+    private lateinit var tvLog: TextView
+    private lateinit var scrollLog: ScrollView
+    private lateinit var etCommand: TextView
+    private lateinit var btnSend: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,12 +38,35 @@ class MainActivity : AppCompatActivity() {
         }
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        tvLog = findViewById(R.id.tvLog)
+        scrollLog = findViewById(R.id.scrollLog)
+
+        etCommand = findViewById<EditText>(R.id.etCommand)
+        btnSend = findViewById<Button>(R.id.btnSend)
+
+        btnSend.setOnClickListener {
+            val cmd = etCommand.text.toString().trim()
+            sendCustomCommand(cmd)
+        }
+        etCommand.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEND) {
+                val cmd = etCommand.text.toString().trim()
+                sendCustomCommand(cmd)
+                true
+            } else false
+        }
+    }
+
+    fun sendCustomCommand(cmd: String) {
+        if (cmd.isNotEmpty()) {
+            appendLog("> $cmd")
+            runRcon(cmd) { appendLog(it) }
+        }
     }
 
     override fun onStart() {
         super.onStart()
-        initLateInitVars()
-        setOnClickListeners()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -52,19 +81,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_status -> {
-                runRcon("status") { Log.d("RCON", it) }
+                sendCustomCommand("Status")
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun initLateInitVars() {
-        button8 = findViewById(R.id.button8)
-    }
-
-    private fun setOnClickListeners() {
-        button8.setOnClickListener(::onStatusClick)
     }
     private fun onStatusClick(v: View) = runRcon("status") { Log.d("RCON", it) }
 
@@ -103,5 +124,12 @@ class MainActivity : AppCompatActivity() {
             return null
         }
         return RconClient(host, port, password)
+    }
+
+    private fun appendLog(text: String) {
+        runOnUiThread {
+            tvLog.append("$text\n\n")
+            scrollLog.post { scrollLog.fullScroll(View.FOCUS_DOWN) }
+        }
     }
 }
