@@ -1,8 +1,12 @@
 package com.ibrusniak.app
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -24,12 +28,29 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    private val COLOR_COMMAND = Color.parseColor("#FFD700")
+    private val COLOR_SUCCESS = Color.parseColor("#00FF00")
+    private val COLOR_ERROR = Color.parseColor("#FF5555")
+
     private var isRequestInProgress = false
 
     private lateinit var tvLog: TextView
     private lateinit var scrollLog: ScrollView
     private lateinit var etCommand: TextView
     private lateinit var btnSend: Button
+
+    private lateinit var button1: Button
+    private lateinit var button2: Button
+    private lateinit var button3: Button
+    private lateinit var button4: Button
+    private lateinit var button5: Button
+    private lateinit var button6: Button
+    private lateinit var button7: Button
+    private lateinit var button8: Button
+    private lateinit var button9: Button
+    private lateinit var button10: Button
+    private lateinit var button11: Button
+    private lateinit var button12: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,13 +70,80 @@ class MainActivity : AppCompatActivity() {
         tvLog.setHorizontallyScrolling(true)
         tvLog.movementMethod = null
 
+        button1 = findViewById(R.id.button1)
+        button2 = findViewById(R.id.button2)
+        button3 = findViewById(R.id.button3)
+        button4 = findViewById(R.id.button4)
+        button5 = findViewById(R.id.button5)
+        button6 = findViewById(R.id.button6)
+        button7 = findViewById(R.id.button7)
+        button8 = findViewById(R.id.button8)
+        button9 = findViewById(R.id.button9)
+        button10 = findViewById(R.id.button10)
+        button11 = findViewById(R.id.button11)
+        button12 = findViewById(R.id.button12)
+
+        button1.setOnClickListener {
+            sendCustomCommand("Status")
+        }
+
+        button2.setOnClickListener {
+            sendCustomCommand("bot_kick")
+        }
+
+        button3.setOnClickListener {
+            sendCustomCommand("bot_add_ct")
+        }
+
+        button4.setOnClickListener {
+            sendCustomCommand("bot_add_t")
+        }
+
+        button5.setOnClickListener {
+            sendCustomCommand("mp_restartgame 5")
+        }
+
+        button6.setOnClickListener {
+
+            appendLog("> ## player names:", COLOR_COMMAND)
+            val rcon = getRcon() ?: return@setOnClickListener
+            isRequestInProgress = true
+            setUiEnabled(false)
+            lifecycleScope.launch {
+                try {
+                    val result = rcon.sendCommand("status")
+                    val names = parsePlayerNames(result)
+                    val text = if (names.isEmpty()) "Игроков нет\n" else names.joinToString("\n") { "• $it" } + "\n"
+                    appendLog("✅ successful\n$text", COLOR_SUCCESS)
+                } catch (e: Exception) {
+                    appendLog("❌ fail\n${e.message}", COLOR_ERROR)
+                } finally {
+                    isRequestInProgress = false
+                    setUiEnabled(true)
+                }
+            }
+        }
+
+        button7.setOnClickListener {}
+
+        button8.setOnClickListener {}
+
+        button9.setOnClickListener {}
+
+        button10.setOnClickListener {}
+
+        button11.setOnClickListener {}
+
+        button12.setOnClickListener {}
+
         etCommand = findViewById<EditText>(R.id.etCommand)
-        btnSend = findViewById<Button>(R.id.btnSend)
+        btnSend = findViewById(R.id.btnSend)
 
         btnSend.setOnClickListener {
             val cmd = etCommand.text.toString().trim()
             sendCustomCommand(cmd)
         }
+
         etCommand.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 val cmd = etCommand.text.toString().trim()
@@ -70,6 +158,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun parsePlayerNames(statusResponse: String): List<String> {
+        val regex = Regex("""^#\s*\d+\s+"([^"]+)"""", RegexOption.MULTILINE)
+        return regex.findAll(statusResponse)
+            .map { it.groupValues[1] }
+            .toList()
+    }
+
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)
         outState.putString("log_text", tvLog.text.toString())
@@ -77,7 +172,6 @@ class MainActivity : AppCompatActivity() {
 
     fun sendCustomCommand(cmd: String) {
         if (cmd.isNotEmpty()) {
-            appendLog("> $cmd")
             runRcon(cmd) { appendLog(it) }
         }
     }
@@ -97,40 +191,42 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, SettingsActivity::class.java))
                 true
             }
+
             R.id.action_status -> {
                 sendCustomCommand("Status")
                 true
             }
+
             R.id.action_bot_kick_all -> {
                 sendCustomCommand("bot_kick")
                 true
             }
+
             R.id.action_bot_add_t -> {
                 sendCustomCommand("bot_add_t")
                 true
             }
+
             R.id.action_bot_add_ct -> {
                 sendCustomCommand("bot_add_ct")
                 true
             }
+
+            R.id.action_restart_game -> {
+                sendCustomCommand("mp_restartgame 5")
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
-    private fun onStatusClick(v: View) = runRcon("status") { Log.d("RCON", it) }
-
-    private fun onPlayersClick(v: View) = runRcon("status") { players -> Log.d("RCON", players) }
-
-    private fun onKickClick(v: View, nameOrId: String) = runRcon("kick \"$nameOrId\"") { Log.d("RCON", it) }
-
-    private fun onAddBotClick(v: View) = runRcon("bot_add") { Log.d("RCON", it) }
-
-    private fun onKickBotClick(v: View) = runRcon("bot_kick") { Log.d("RCON", it) }
-
-    private fun onExecScriptClick(v: View, scriptName: String) = runRcon("exec $scriptName") { Log.d("RCON", it) }
 
     private fun runRcon(command: String, onResult: (String) -> Unit) {
+
         if (isRequestInProgress) {
-            Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this, "Please wait for the previous command to finish", Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -138,18 +234,19 @@ class MainActivity : AppCompatActivity() {
         isRequestInProgress = true
         setUiEnabled(false)
 
+        appendLog("> $command", COLOR_COMMAND)
+
         lifecycleScope.launch {
             try {
                 val result = rcon.sendCommand(command)
                 if (result == "AUTH_FAILED") {
-                    onResult("❌ fail\nНеверный RCON пароль")
+                    appendLog("❌ fail\nНеверный RCON пароль", COLOR_ERROR)
                 } else {
-                    val body = if (result.isNotBlank()) "\n$result" else ""
-                    onResult("✅ successful$body")
+                    val body = if (result.isNotEmpty() && result.isNotBlank()) result else ""
+                    appendLog("✅ successful\n$body", COLOR_SUCCESS)
                 }
             } catch (e: Exception) {
-                Log.e("RCON", "Ошибка: ${e.message}", e)
-                onResult("❌ fail\n${e.message}")
+                appendLog("❌ fail\n${e.message}\n", COLOR_ERROR)
             } finally {
                 isRequestInProgress = false
                 setUiEnabled(true)
@@ -177,9 +274,13 @@ class MainActivity : AppCompatActivity() {
         return RconClient(host, port, password)
     }
 
-    private fun appendLog(text: String) {
+    private fun appendLog(text: String, color: Int = Color.parseColor("#00FF00")) {
         runOnUiThread {
-            tvLog.append("$text\n\n")
+            val spannable = SpannableString(text + "\n")
+            spannable.setSpan(
+                ForegroundColorSpan(color), 0, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            tvLog.append(spannable)
             scrollLog.post { scrollLog.fullScroll(View.FOCUS_DOWN) }
         }
     }

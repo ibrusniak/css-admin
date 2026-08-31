@@ -12,6 +12,9 @@
         android:id="@+id/action_status"
         android:title="@string/status"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_restart_game"
+        android:title="@string/restart_game" />
     <item android:title="@string/bots" >
         <menu >
             <item
