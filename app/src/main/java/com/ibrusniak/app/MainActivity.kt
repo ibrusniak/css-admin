@@ -7,7 +7,6 @@ import android.os.PersistableBundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -19,18 +18,18 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.launch
+import androidx.core.graphics.toColorInt
 
 class MainActivity : AppCompatActivity() {
 
-    private val COLOR_COMMAND = Color.parseColor("#FFD700")
-    private val COLOR_SUCCESS = Color.parseColor("#00FF00")
-    private val COLOR_ERROR = Color.parseColor("#FF5555")
+    private val COLOR_COMMAND = "#FFD700".toColorInt()
+    private val COLOR_SUCCESS = "#00FF00".toColorInt()
+    private val COLOR_ERROR = "#FF5555".toColorInt()
 
     private var isRequestInProgress = false
 
@@ -113,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                 try {
                     val result = rcon.sendCommand("status")
                     val names = parsePlayerNames(result)
-                    val text = if (names.isEmpty()) "Игроков нет\n" else names.joinToString("\n") { "• $it" } + "\n"
+                    val text = if (names.isEmpty()) "No players\n" else names.joinToString("\n") { "• $it" } + "\n"
                     appendLog("✅ successful\n$text", COLOR_SUCCESS)
                 } catch (e: Exception) {
                     appendLog("❌ fail\n${e.message}", COLOR_ERROR)
@@ -240,7 +239,7 @@ class MainActivity : AppCompatActivity() {
             try {
                 val result = rcon.sendCommand(command)
                 if (result == "AUTH_FAILED") {
-                    appendLog("❌ fail\nНеверный RCON пароль", COLOR_ERROR)
+                    appendLog("❌ fail\nInvalid RCON password", COLOR_ERROR)
                 } else {
                     val body = if (result.isNotEmpty() && result.isNotBlank()) result else ""
                     appendLog("✅ successful\n$body", COLOR_SUCCESS)
@@ -257,7 +256,7 @@ class MainActivity : AppCompatActivity() {
     private fun setUiEnabled(enabled: Boolean) {
         findViewById<EditText>(R.id.etCommand).isEnabled = enabled
         findViewById<Button>(R.id.btnSend).isEnabled = enabled
-        invalidateOptionsMenu() // чтобы пункты тулбар-меню тоже перерисовались с учётом isEnabled ниже
+        invalidateOptionsMenu()
     }
 
     private fun getRcon(): RconClient? {
@@ -267,7 +266,7 @@ class MainActivity : AppCompatActivity() {
         val password = prefs.getString("password", "") ?: ""
 
         if (host.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Заполните настройки RCON", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Fill in RCON settings", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, SettingsActivity::class.java))
             return null
         }

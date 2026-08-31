@@ -12,7 +12,7 @@
     <string name="bots">Bots</string>
     <string name="bots_kick_all">Kick all</string>
     <string name="bots_add_t">+T</string>
-    <string name="bots_add_ct">+ CT</string>
+    <string name="bots_add_ct">+CT</string>
     <string name="restart_game_short">R-rt game</string>
     <string name="restart_game">Restart game</string>
     <string name="bots_kick_all_short">-BOTS</string>
