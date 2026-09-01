@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">RCON client</string>
+    <string name="app_name" translatable="false">CSS admin</string>
     <string name="test" translatable="false">Test</string>
     <string name="default_command">Default command</string>
     <string name="settings">Settings</string>

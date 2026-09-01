@@ -1,4 +1,4 @@
-package com.ibrusniak.app
+package com.iBrusniak.cssAdmin
 
 import android.content.SharedPreferences
 import android.os.Bundle

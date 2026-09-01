@@ -1,4 +1,4 @@
-package com.ibrusniak.app
+package com.iBrusniak.cssAdmin
 
 import java.io.DataInputStream
 import java.io.DataOutputStream

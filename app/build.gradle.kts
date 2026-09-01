@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    namespace = "com.ibrusniak.app"
+    namespace = "com.iBrusniak.cssAdmin"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.ibrusniak.app"
+        applicationId = "com.iBrusniak.cssAdmin"
         minSdk = 29
         targetSdk = 36
         versionCode = 3
