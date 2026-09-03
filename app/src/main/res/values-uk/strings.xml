@@ -1,2 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="test">Тест</string>
+    <string name="default_command">Довільна команда</string>
+    <string name="settings">Налаштування</string>
+    <string name="save">Зберегти</string>
+    <string name="sever_ip">IP серверу</string>
+    <string name="port">Порт</string>
+    <string name="rcon_password">RCON пароль</string>
+    <string name="please_wait">Будь ласка дочекайтесь викоання попередньої команди</string>
+    <string name="status">Статус</string>
+    <string name="bots">Боти</string>
+    <string name="bots_kick_all">Кікнути усіх</string>
+    <string name="bots_add_t">+T</string>
+    <string name="bots_add_ct">+CT</string>
+    <string name="restart_game_short">Рестарт</string>
+    <string name="restart_game">Перезапуск гри</string>
+    <string name="bots_kick_all_short">-BOTS</string>
+    <string name="player_names">Імена</string>
+</resources>

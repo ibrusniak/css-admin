@@ -95,8 +95,7 @@
                 android:insetTop="0dp"
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
-                android:text="@string/status"
-                app:cornerRadius="0dp" />
+                android:text="@string/status" />
 
             <Button
                 android:id="@+id/button2"
@@ -106,8 +105,7 @@
                 android:insetTop="0dp"
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
-                android:text="@string/bots_kick_all_short"
-                app:cornerRadius="0dp" />
+                android:text="@string/bots_kick_all_short" />
 
             <Button
                 android:id="@+id/button3"
@@ -117,8 +115,7 @@
                 android:insetTop="0dp"
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
-                android:text="@string/bots_add_ct"
-                app:cornerRadius="0dp" />
+                android:text="@string/bots_add_ct" />
 
             <Button
                 android:id="@+id/button4"
@@ -128,8 +125,7 @@
                 android:insetTop="0dp"
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
-                android:text="@string/bots_add_t"
-                app:cornerRadius="0dp" />
+                android:text="@string/bots_add_t" />
 
             <Button
                 android:id="@+id/button5"
@@ -139,8 +135,7 @@
                 android:insetTop="0dp"
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
-                android:text="@string/restart_game_short"
-                app:cornerRadius="0dp" />
+                android:text="@string/restart_game_short" />
 
             <Button
                 android:id="@+id/button6"
@@ -150,8 +145,7 @@
                 android:insetTop="0dp"
                 android:insetRight="0dp"
                 android:insetBottom="0dp"
-                android:text="@string/player_names"
-                app:cornerRadius="0dp" />
+                android:text="@string/player_names" />
 
             <Button
                 android:id="@+id/button7"
@@ -160,8 +154,7 @@
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
-                android:insetBottom="0dp"
-                app:cornerRadius="0dp" />
+                android:insetBottom="0dp" />
 
             <Button
                 android:id="@+id/button8"
@@ -170,8 +163,7 @@
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
-                android:insetBottom="0dp"
-                app:cornerRadius="0dp" />
+                android:insetBottom="0dp" />
 
             <Button
                 android:id="@+id/button9"
@@ -180,8 +172,7 @@
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
-                android:insetBottom="0dp"
-                app:cornerRadius="0dp" />
+                android:insetBottom="0dp" />
 
             <Button
                 android:id="@+id/button10"
@@ -190,8 +181,7 @@
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
-                android:insetBottom="0dp"
-                app:cornerRadius="0dp" />
+                android:insetBottom="0dp" />
 
             <Button
                 android:id="@+id/button11"
@@ -200,8 +190,7 @@
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
-                android:insetBottom="0dp"
-                app:cornerRadius="0dp" />
+                android:insetBottom="0dp" />
 
             <Button
                 android:id="@+id/button12"
@@ -210,8 +199,7 @@
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
-                android:insetBottom="0dp"
-                app:cornerRadius="0dp" />
+                android:insetBottom="0dp" />
 
             <androidx.constraintlayout.helper.widget.Flow
                 android:id="@+id/flowButtons"
