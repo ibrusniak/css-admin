@@ -3,6 +3,10 @@ plugins {
 }
 
 android {
+    lint {
+        disable += "OldTargetApi"
+    }
+
     namespace = "com.iBrusniak.cssAdmin"
 
     compileSdk {
@@ -13,8 +17,8 @@ android {
         applicationId = "com.iBrusniak.cssAdmin"
         minSdk = 29
         targetSdk = 36
-        versionCode = 3
-        versionName = "3.0"
+        versionCode = 4
+        versionName = "1.0.0"
 
         testInstrumentationRunner =
             "androidx.test.runner.AndroidJUnitRunner"
@@ -34,6 +38,7 @@ android {
     }
 }
 
+@Suppress("UnstableApiUsage")
 androidComponents {
     onVariants(selector().all()) { variant ->
         variant.outputs.forEach { output ->

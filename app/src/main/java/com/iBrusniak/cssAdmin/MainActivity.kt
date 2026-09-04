@@ -1,12 +1,9 @@
 package com.iBrusniak.cssAdmin
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.text.Spannable
 import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -23,13 +20,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.launch
-import androidx.core.graphics.toColorInt
 
 class MainActivity : AppCompatActivity() {
-
-    private val COLOR_COMMAND = "#FFD700".toColorInt()
-    private val COLOR_SUCCESS = "#00FF00".toColorInt()
-    private val COLOR_ERROR = "#FF5555".toColorInt()
 
     private var isRequestInProgress = false
 
@@ -104,21 +96,19 @@ class MainActivity : AppCompatActivity() {
 
         button6.setOnClickListener {
 
-            appendLog("> ## player names:", COLOR_COMMAND)
+            appendLog("> ## player names:")
             val rcon = getRcon() ?: return@setOnClickListener
             isRequestInProgress = true
-            setUiEnabled(false)
             lifecycleScope.launch {
                 try {
                     val result = rcon.sendCommand("status")
                     val names = parsePlayerNames(result)
                     val text = if (names.isEmpty()) "No players\n" else names.joinToString("\n") { "• $it" } + "\n"
-                    appendLog("✅ successful\n$text", COLOR_SUCCESS)
+                    appendLog("✅ successful\n$text")
                 } catch (e: Exception) {
-                    appendLog("❌ fail\n${e.message}", COLOR_ERROR)
+                    appendLog("❌ fail\n${e.message}")
                 } finally {
                     isRequestInProgress = false
-                    setUiEnabled(true)
                 }
             }
         }
@@ -171,7 +161,7 @@ class MainActivity : AppCompatActivity() {
 
     fun sendCustomCommand(cmd: String) {
         if (cmd.isNotEmpty()) {
-            runRcon(cmd) { appendLog(it) }
+            runRCONCommand(cmd)
         }
     }
 
@@ -191,72 +181,39 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
-            R.id.action_status -> {
-                sendCustomCommand("Status")
-                true
-            }
-
-            R.id.action_bot_kick_all -> {
-                sendCustomCommand("bot_kick")
-                true
-            }
-
-            R.id.action_bot_add_t -> {
-                sendCustomCommand("bot_add_t")
-                true
-            }
-
-            R.id.action_bot_add_ct -> {
-                sendCustomCommand("bot_add_ct")
-                true
-            }
-
-            R.id.action_restart_game -> {
-                sendCustomCommand("mp_restartgame 5")
-                true
-            }
-
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    private fun runRcon(command: String, onResult: (String) -> Unit) {
+    private fun runRCONCommand(command: String) {
 
         if (isRequestInProgress) {
             Toast.makeText(
-                this, "Please wait for the previous command to finish", Toast.LENGTH_SHORT
+                this, getString(R.string.please_wait), Toast.LENGTH_SHORT
             ).show()
             return
         }
 
         val rcon = getRcon() ?: return
         isRequestInProgress = true
-        setUiEnabled(false)
 
-        appendLog("> $command", COLOR_COMMAND)
+        appendLog("> $command")
 
         lifecycleScope.launch {
             try {
                 val result = rcon.sendCommand(command)
                 if (result == "AUTH_FAILED") {
-                    appendLog("❌ fail\nInvalid RCON password", COLOR_ERROR)
+                    appendLog("❌ fail\nInvalid RCON password")
                 } else {
                     val body = if (result.isNotEmpty() && result.isNotBlank()) result else ""
-                    appendLog("✅ successful\n$body", COLOR_SUCCESS)
+                    appendLog("✅ successful\n$body")
                 }
             } catch (e: Exception) {
-                appendLog("❌ fail\n${e.message}\n", COLOR_ERROR)
+                appendLog("❌ fail\n${e.message}\n")
             } finally {
                 isRequestInProgress = false
-                setUiEnabled(true)
             }
         }
-    }
-
-    private fun setUiEnabled(enabled: Boolean) {
-        findViewById<EditText>(R.id.etCommand).isEnabled = enabled
-        findViewById<Button>(R.id.btnSend).isEnabled = enabled
-        invalidateOptionsMenu()
     }
 
     private fun getRcon(): RconClient? {
@@ -273,12 +230,9 @@ class MainActivity : AppCompatActivity() {
         return RconClient(host, port, password)
     }
 
-    private fun appendLog(text: String, color: Int = Color.parseColor("#00FF00")) {
+    private fun appendLog(text: String) {
         runOnUiThread {
             val spannable = SpannableString(text + "\n")
-            spannable.setSpan(
-                ForegroundColorSpan(color), 0, spannable.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
             tvLog.append(spannable)
             scrollLog.post { scrollLog.fullScroll(View.FOCUS_DOWN) }
         }

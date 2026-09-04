@@ -17,4 +17,6 @@
     <string name="restart_game">Перезапуск гри</string>
     <string name="bots_kick_all_short">-BOTS</string>
     <string name="player_names">Імена</string>
+    <string name="successful">✅ успіх</string>
+    <string name="fail">❌ помилка</string>
 </resources>

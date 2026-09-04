@@ -8,25 +8,4 @@
         android:title="@string/settings"
         app:showAsAction="always" />
 
-    <item
-        android:id="@+id/action_status"
-        android:title="@string/status"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_restart_game"
-        android:title="@string/restart_game" />
-    <item android:title="@string/bots" >
-        <menu >
-            <item
-                android:id="@+id/action_bot_kick_all"
-                android:title="@string/bots_kick_all" />
-            <item
-                android:id="@+id/action_bot_add_ct"
-                android:title="@string/bots_add_ct" />
-            <item
-                android:id="@+id/action_bot_add_t"
-                android:title="@string/bots_add_t" />
-        </menu>
-    </item>
-
 </menu>

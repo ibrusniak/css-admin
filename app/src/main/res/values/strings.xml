@@ -17,4 +17,7 @@
     <string name="restart_game">Restart game</string>
     <string name="bots_kick_all_short">-BOTS</string>
     <string name="player_names">Names</string>
+    <string name="successful">✅ successful</string>
+    <string name="fail">❌ fail</string>
+    <string name="run_command_sign" translatable="false">➤</string>
 </resources>
