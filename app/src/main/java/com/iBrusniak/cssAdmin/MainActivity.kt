@@ -155,6 +155,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        loadCommandHistory()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
