@@ -20,4 +20,8 @@
     <string name="successful">✅ successful</string>
     <string name="fail">❌ fail</string>
     <string name="run_command_sign" translatable="false">➤</string>
+    <string name="fill_rcon_settings">Fill in RCON settings</string>
+    <string name="player_names_log">> ## player names:</string>
+    <string name="no_players">No players</string>
+    <string name="invalid_rcon_password">Invalid RCON password</string>
 </resources>

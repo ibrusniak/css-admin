@@ -94,24 +94,7 @@ class MainActivity : AppCompatActivity() {
             sendCustomCommand("mp_restartgame 5")
         }
 
-        button6.setOnClickListener {
-
-            appendLog("> ## player names:")
-            val rcon = getRcon() ?: return@setOnClickListener
-            isRequestInProgress = true
-            lifecycleScope.launch {
-                try {
-                    val result = rcon.sendCommand("status")
-                    val names = parsePlayerNames(result)
-                    val text = if (names.isEmpty()) "No players\n" else names.joinToString("\n") { "• $it" } + "\n"
-                    appendLog("✅ successful\n$text")
-                } catch (e: Exception) {
-                    appendLog("❌ fail\n${e.message}")
-                } finally {
-                    isRequestInProgress = false
-                }
-            }
-        }
+        button6.setOnClickListener {}
 
         button7.setOnClickListener {}
 
@@ -145,13 +128,6 @@ class MainActivity : AppCompatActivity() {
             tvLog.text = savedLog
             scrollLog.post { scrollLog.fullScroll(View.FOCUS_DOWN) }
         }
-    }
-
-    private fun parsePlayerNames(statusResponse: String): List<String> {
-        val regex = Regex("""^#\s*\d+\s+"([^"]+)"""", RegexOption.MULTILINE)
-        return regex.findAll(statusResponse)
-            .map { it.groupValues[1] }
-            .toList()
     }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
@@ -197,19 +173,19 @@ class MainActivity : AppCompatActivity() {
         val rcon = getRcon() ?: return
         isRequestInProgress = true
 
-        appendLog("> $command")
+        appendLog(">>> $command")
 
         lifecycleScope.launch {
             try {
                 val result = rcon.sendCommand(command)
                 if (result == "AUTH_FAILED") {
-                    appendLog("❌ fail\nInvalid RCON password")
+                    appendLog("${getString(R.string.fail)}\n${getString(R.string.invalid_rcon_password)}\n")
                 } else {
                     val body = if (result.isNotEmpty() && result.isNotBlank()) result else ""
-                    appendLog("✅ successful\n$body")
+                    appendLog("${getString(R.string.successful)}\n$body")
                 }
             } catch (e: Exception) {
-                appendLog("❌ fail\n${e.message}\n")
+                appendLog("${getString(R.string.fail)}\n${e.message}\n")
             } finally {
                 isRequestInProgress = false
             }
@@ -223,7 +199,7 @@ class MainActivity : AppCompatActivity() {
         val password = prefs.getString("password", "") ?: ""
 
         if (host.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Fill in RCON settings", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.fill_rcon_settings), Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, SettingsActivity::class.java))
             return null
         }

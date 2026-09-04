@@ -19,4 +19,8 @@
     <string name="player_names">Имена</string>
     <string name="successful">✅ успешно</string>
     <string name="fail">❌ ошибка</string>
+    <string name="fill_rcon_settings">Заполните настройки RCON</string>
+    <string name="player_names_log">> ## имена игроков:</string>
+    <string name="no_players">Игроков нет</string>
+    <string name="invalid_rcon_password">Неверный пароль RCON</string>
 </resources>
