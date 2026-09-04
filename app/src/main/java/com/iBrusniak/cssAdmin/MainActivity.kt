@@ -103,8 +103,9 @@ class MainActivity : AppCompatActivity() {
         etCommand = findViewById(R.id.etCommand)
 
         loadCommandHistory()
-        commandHistoryAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, commandHistory)
+        commandHistoryAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, mutableListOf<String>())
         etCommand.setAdapter(commandHistoryAdapter)
+        updateHistoryAdapter()
 
         etCommand.setOnClickListener {
             if (commandHistory.isNotEmpty()) {
@@ -131,7 +132,11 @@ class MainActivity : AppCompatActivity() {
         etCommand.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEND) {
                 val cmd = etCommand.text.toString().trim()
-                sendCustomCommand(cmd)
+                if (cmd.isNotEmpty()) {
+                    addToHistory(cmd)
+                    runRCONCommand(cmd)
+                    etCommand.text.clear()
+                }
                 true
             } else false
         }
@@ -156,6 +161,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         loadCommandHistory()
+        updateHistoryAdapter()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -220,7 +226,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun saveCommandHistory() {
-        historyPrefs.edit {
+        historyPrefs.edit(commit = true) {
             putString("history", commandHistory.joinToString("\u0001"))
         }
     }
@@ -238,9 +244,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         saveCommandHistory()
-        commandHistoryAdapter.clear()
-        commandHistoryAdapter.addAll(commandHistory)
-        commandHistoryAdapter.notifyDataSetChanged()
+        updateHistoryAdapter()
+    }
+
+    private fun updateHistoryAdapter() {
+        if (::commandHistoryAdapter.isInitialized) {
+            commandHistoryAdapter.clear()
+            commandHistoryAdapter.addAll(commandHistory)
+            commandHistoryAdapter.notifyDataSetChanged()
+        }
     }
 
     private fun getRcon(): RconClient? {
