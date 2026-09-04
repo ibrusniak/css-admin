@@ -8,8 +8,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.EditorInfo
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
@@ -20,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.launch
+import androidx.core.content.edit
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,7 +29,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var tvLog: TextView
     private lateinit var scrollLog: ScrollView
-    private lateinit var etCommand: TextView
+
+    private lateinit var etCommand: AutoCompleteTextView
+    private lateinit var commandHistoryAdapter: ArrayAdapter<String>
+    private val historyPrefs by lazy { getSharedPreferences("command_history", MODE_PRIVATE) }
+    private val commandHistory = mutableListOf<String>()
+
     private lateinit var btnSend: Button
 
     private lateinit var button1: Button
@@ -108,12 +115,33 @@ class MainActivity : AppCompatActivity() {
 
         button12.setOnClickListener {}
 
-        etCommand = findViewById<EditText>(R.id.etCommand)
+        etCommand = findViewById(R.id.etCommand)
+
+        loadCommandHistory()
+        commandHistoryAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, commandHistory)
+        etCommand.setAdapter(commandHistoryAdapter)
+
+        // Показывать всю историю по тапу на поле, даже без ввода текста
+        etCommand.setOnClickListener {
+            if (commandHistory.isNotEmpty()) {
+                etCommand.showDropDown()
+            }
+        }
+        etCommand.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus && commandHistory.isNotEmpty()) {
+                etCommand.showDropDown()
+            }
+        }
+
         btnSend = findViewById(R.id.btnSend)
 
         btnSend.setOnClickListener {
             val cmd = etCommand.text.toString().trim()
-            sendCustomCommand(cmd)
+            if (cmd.isNotEmpty()) {
+                addToHistory(cmd)
+                runRCONCommand(cmd)
+                etCommand.text.clear()
+            }
         }
 
         etCommand.setOnEditorActionListener { _, actionId, _ ->
@@ -190,6 +218,37 @@ class MainActivity : AppCompatActivity() {
                 isRequestInProgress = false
             }
         }
+    }
+
+    private fun loadCommandHistory() {
+        val saved = historyPrefs.getString("history", "") ?: ""
+        commandHistory.clear()
+        if (saved.isNotEmpty()) {
+            commandHistory.addAll(saved.split("\u0001").filter { it.isNotBlank() })
+        }
+    }
+
+    private fun saveCommandHistory() {
+        historyPrefs.edit {
+            putString("history", commandHistory.joinToString("\u0001"))
+        }
+    }
+
+    private fun addToHistory(command: String) {
+        val trimmed = command.trim()
+        if (trimmed.isEmpty()) return
+
+        commandHistory.remove(trimmed) // убираем дубликат, если уже был
+        commandHistory.add(0, trimmed) // добавляем в начало (последняя команда — первая в списке)
+
+        while (commandHistory.size > 15) {
+            commandHistory.removeAt(commandHistory.size - 1)
+        }
+
+        saveCommandHistory()
+        commandHistoryAdapter.clear()
+        commandHistoryAdapter.addAll(commandHistory)
+        commandHistoryAdapter.notifyDataSetChanged()
     }
 
     private fun getRcon(): RconClient? {

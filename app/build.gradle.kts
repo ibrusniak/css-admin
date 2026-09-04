@@ -17,8 +17,8 @@ android {
         applicationId = "com.iBrusniak.cssAdmin"
         minSdk = 29
         targetSdk = 36
-        versionCode = 5
-        versionName = "1.0.1"
+        versionCode = 6
+        versionName = "1.0.2"
 
         testInstrumentationRunner =
             "androidx.test.runner.AndroidJUnitRunner"
