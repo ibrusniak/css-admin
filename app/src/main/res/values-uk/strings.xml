@@ -23,4 +23,5 @@
     <string name="player_names_log">> ## імена гравців:</string>
     <string name="no_players">Гравців немає</string>
     <string name="invalid_rcon_password">Невірний пароль RCON</string>
+    <string name="prohibited">Виконання даної команди заборонено!</string>
 </resources>

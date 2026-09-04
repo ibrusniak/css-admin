@@ -45,10 +45,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var button6: Button
     private lateinit var button7: Button
     private lateinit var button8: Button
-    private lateinit var button9: Button
-    private lateinit var button10: Button
-    private lateinit var button11: Button
-    private lateinit var button12: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,10 +72,6 @@ class MainActivity : AppCompatActivity() {
         button6 = findViewById(R.id.button6)
         button7 = findViewById(R.id.button7)
         button8 = findViewById(R.id.button8)
-        button9 = findViewById(R.id.button9)
-        button10 = findViewById(R.id.button10)
-        button11 = findViewById(R.id.button11)
-        button12 = findViewById(R.id.button12)
 
         button1.setOnClickListener {
             sendCustomCommand("Status")
@@ -107,13 +99,6 @@ class MainActivity : AppCompatActivity() {
 
         button8.setOnClickListener {}
 
-        button9.setOnClickListener {}
-
-        button10.setOnClickListener {}
-
-        button11.setOnClickListener {}
-
-        button12.setOnClickListener {}
 
         etCommand = findViewById(R.id.etCommand)
 
@@ -121,7 +106,6 @@ class MainActivity : AppCompatActivity() {
         commandHistoryAdapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, commandHistory)
         etCommand.setAdapter(commandHistoryAdapter)
 
-        // Показывать всю историю по тапу на поле, даже без ввода текста
         etCommand.setOnClickListener {
             if (commandHistory.isNotEmpty()) {
                 etCommand.showDropDown()
@@ -203,6 +187,12 @@ class MainActivity : AppCompatActivity() {
 
         appendLog(">>> $command")
 
+        if (command.uppercase().trim() == "QUIT" || command.uppercase().trim() == "EXIT") {
+            appendLog("${getString(R.string.fail)}\n${getString(R.string.prohibited)}\n")
+            isRequestInProgress = false
+            return
+        }
+
         lifecycleScope.launch {
             try {
                 val result = rcon.sendCommand(command)
@@ -235,11 +225,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addToHistory(command: String) {
+
         val trimmed = command.trim()
         if (trimmed.isEmpty()) return
 
-        commandHistory.remove(trimmed) // убираем дубликат, если уже был
-        commandHistory.add(0, trimmed) // добавляем в начало (последняя команда — первая в списке)
+        commandHistory.remove(trimmed)
+        commandHistory.add(0, trimmed)
 
         while (commandHistory.size > 15) {
             commandHistory.removeAt(commandHistory.size - 1)
