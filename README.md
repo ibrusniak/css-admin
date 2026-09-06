@@ -17,8 +17,6 @@ CSS Admin lets you manage a CS:S game server directly from your phone, without l
 - 👢 Interactive player management (kick players by ID from a sorted list)
 - 💻 Send any custom RCON command and view the raw server response
 - 🕒 Command history with autocomplete for quick re-entry
-- 📜 Scrollable command log with smart scrolling for keyboard visibility
-- 🔴 Visual activity indicator (pulsing red dot) for background server requests
 - ⚙️ Server address, port and RCON password are configured on-device (Settings screen)
 
 ## Requirements
@@ -31,13 +29,6 @@ CSS Admin lets you manage a CS:S game server directly from your phone, without l
 1. Install the app
 2. Open **Settings** and enter your server's IP, port, and RCON password
 3. Use the toolbar buttons or the command input field to control the server
-
-## Tech stack
-
-- Kotlin
-- Android SDK (AppCompat, Material Components, ConstraintLayout)
-- Kotlin Coroutines
-- Raw TCP sockets implementing the Source RCON protocol
 
 ## Disclaimer
 
