@@ -103,7 +103,9 @@ class MainActivity : AppCompatActivity() {
             showMapSelectionDialog()
         }
 
-        button7.setOnClickListener {}
+        button7.setOnClickListener {
+            showPlayerKickDialog()
+        }
 
         button8.setOnClickListener {}
 
@@ -344,6 +346,63 @@ class MainActivity : AppCompatActivity() {
             }
             .setPositiveButton(getString(R.string.ok)) { _, _ ->
                 runRCONCommand("changelevel $selectedMap")
+            }
+            .setNegativeButton(getString(R.string.cancel), null)
+            .show()
+    }
+
+    private fun showPlayerKickDialog() {
+        if (isRequestInProgress) {
+            Toast.makeText(this, getString(R.string.please_wait), Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val rcon = getRcon() ?: return
+        isRequestInProgress = true
+        setLoading(true)
+
+        lifecycleScope.launch {
+            try {
+                val result = rcon.sendCommand("users")
+                appendLog(">>> users\n$result")
+                val players = parsePlayers(result)
+                if (players.isEmpty()) {
+                    Toast.makeText(this@MainActivity, getString(R.string.no_players), Toast.LENGTH_SHORT).show()
+                } else {
+                    showKickDialog(players)
+                }
+            } catch (e: Exception) {
+                appendLog("${getString(R.string.fail)}\n${e.message}\n")
+            } finally {
+                isRequestInProgress = false
+                setLoading(false)
+            }
+        }
+    }
+
+    private data class Player(val userId: String, val name: String)
+
+    private fun parsePlayers(rconOutput: String): List<Player> {
+        val players = mutableListOf<Player>()
+        val regex = """\d+:(\d+):"([^"]+)"""".toRegex()
+        regex.findAll(rconOutput).forEach { match ->
+            val userId = match.groupValues[1]
+            val name = match.groupValues[2]
+            players.add(Player(userId, name))
+        }
+        return players.sortedBy { it.name.lowercase() }
+    }
+
+    private fun showKickDialog(players: List<Player>) {
+        val names = players.map { it.name }.toTypedArray()
+        var selectedIndex = 0
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.select_player_title))
+            .setSingleChoiceItems(names, 0) { _, which ->
+                selectedIndex = which
+            }
+            .setPositiveButton(getString(R.string.ok)) { _, _ ->
+                runRCONCommand("kickid ${players[selectedIndex].userId}")
             }
             .setNegativeButton(getString(R.string.cancel), null)
             .show()

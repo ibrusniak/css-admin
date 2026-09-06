@@ -171,7 +171,8 @@
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
-                android:insetBottom="0dp" />
+                android:insetBottom="0dp"
+                android:text="@string/kick_button" />
 
             <Button
                 android:id="@+id/button8"

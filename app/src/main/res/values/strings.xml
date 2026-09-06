@@ -29,4 +29,6 @@
     <string name="select_map_title">Select Map</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="kick_button">Kick</string>
+    <string name="select_player_title">Kick player</string>
 </resources>

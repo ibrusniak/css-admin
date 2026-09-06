@@ -28,4 +28,6 @@
     <string name="select_map_title">Оберіть карту</string>
     <string name="ok">ОК</string>
     <string name="cancel">Скасувати</string>
+    <string name="kick_button">Кікнути</string>
+    <string name="select_player_title">Кікнути гравця</string>
 </resources>
