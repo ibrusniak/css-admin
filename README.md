@@ -13,9 +13,13 @@ CSS Admin lets you manage a CS:S game server directly from your phone, without l
 - 📊 View server status and connected players
 - 🤖 Add / kick bots (Terrorist or Counter-Terrorist)
 - 🔁 Restart the current round
+- 🗺️ Interactive map selection dialog (supports large map lists via multi-packet RCON)
+- 👢 Interactive player management (kick players by ID from a sorted list)
 - 💻 Send any custom RCON command and view the raw server response
-- 📜 Scrollable, color-coded command log (command / success / error)
-- ⚙️ Server address, port and RCON password are configured on-device (Settings screen) — never hardcoded, never committed to the repository
+- 🕒 Command history with autocomplete for quick re-entry
+- 📜 Scrollable command log with smart scrolling for keyboard visibility
+- 🔴 Visual activity indicator (pulsing red dot) for background server requests
+- ⚙️ Server address, port and RCON password are configured on-device (Settings screen)
 
 ## Requirements
 
