@@ -24,4 +24,8 @@
     <string name="no_players">Игроков нет</string>
     <string name="invalid_rcon_password">Неверный пароль RCON</string>
     <string name="prohibited">Выполнение данной команды запрещено!</string>
+    <string name="map_button">Карта</string>
+    <string name="select_map_title">Выберите карту</string>
+    <string name="ok">ОК</string>
+    <string name="cancel">Отмена</string>
 </resources>

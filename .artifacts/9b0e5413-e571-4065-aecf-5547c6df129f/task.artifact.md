@@ -1,5 +1,7 @@
-- [x] Исправить логику `addToHistory` в `MainActivity.kt`
-- [x] Исправить отправку команды через клавиатуру (IME Send)
-- [x] Обновить адаптер в `onStart`
-- [x] Принудительно сбрасывать фильтр при открытии выпадающего списка
+- [x] Создать drawable `loading_indicator_dot.xml` (красный круг)
+- [x] Создать анимацию `blink_animation.xml` (пульсация)
+- [x] Добавить индикатор в `activity_main.xml` в `MaterialToolbar`
+- [x] Реализовать `setLoading` в `MainActivity.kt`
+- [x] Удалить Toast "Запрос к серверу" и обновить логику в `runRCONCommand` и `showMapSelectionDialog`
+- [x] Удалить строковый ресурс `requesting_server`
 - [x] Проверить сборку проекта

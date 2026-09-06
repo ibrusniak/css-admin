@@ -22,6 +22,17 @@
         app:subtitleTextColor="@color/white"
         app:title="@string/app_name" />
 
+    <View
+        android:id="@+id/loadingIndicator"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/loading_indicator_dot"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintStart_toStartOf="@+id/toolbar"
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+
     <LinearLayout
         android:id="@+id/constraintLayoutMainContent"
         android:layout_width="0dp"
@@ -150,7 +161,8 @@
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
-                android:insetBottom="0dp" />
+                android:insetBottom="0dp"
+                android:text="@string/map_button" />
 
             <Button
                 android:id="@+id/button7"

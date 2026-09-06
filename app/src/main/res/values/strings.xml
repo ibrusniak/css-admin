@@ -25,4 +25,8 @@
     <string name="no_players">No players</string>
     <string name="invalid_rcon_password">Invalid RCON password</string>
     <string name="prohibited">Execution of this command is prohibited!</string>
+    <string name="map_button">Map</string>
+    <string name="select_map_title">Select Map</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>
