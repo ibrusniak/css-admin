@@ -8,6 +8,19 @@ Android-приложение для администрирования серв�
 
 CSS Admin позволяет управлять сервером CS:S прямо с телефона, без запуска игрового клиента. Приложение работает по тому же протоколу Source Engine RCON, что используется внутриигровой консолью.
 
+## Скриншоты
+
+<p align="center">
+  <img src="screenshots/Screenshot_20260906_130543.png" width="30%" />
+  <img src="screenshots/Screenshot_20260906_130657.png" width="30%" />
+  <img src="screenshots/Screenshot_20260906_130910.png" width="30%" />
+</p>
+<p align="center">
+  <img src="screenshots/Screenshot_20260906_131014.png" width="30%" />
+  <img src="screenshots/Screenshot_20260906_131048.png" width="30%" />
+  <img src="screenshots/Screenshot_20260906_131058.png" width="30%" />
+</p>
+
 ## Возможности
 
 - 📊 Просмотр статуса сервера и списка подключённых игроков
