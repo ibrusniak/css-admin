@@ -11,14 +11,9 @@ CSS Admin lets you manage a CS:S game server directly from your phone, without l
 ## Screenshots
 
 <p align="center">
-  <img src="screenshots/Screenshot_20260906_130543.png" width="30%" />
-  <img src="screenshots/Screenshot_20260906_130657.png" width="30%" />
-  <img src="screenshots/Screenshot_20260906_130910.png" width="30%" />
-</p>
-<p align="center">
-  <img src="screenshots/Screenshot_20260906_131014.png" width="30%" />
-  <img src="screenshots/Screenshot_20260906_131048.png" width="30%" />
-  <img src="screenshots/Screenshot_20260906_131058.png" width="30%" />
+  <img src="screenshots/1.png" width="30%" />
+  <img src="screenshots/2.png" width="30%" />
+  <img src="screenshots/3.png" width="30%" />
 </p>
 
 ## Features

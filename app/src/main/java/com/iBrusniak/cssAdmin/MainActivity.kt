@@ -61,6 +61,10 @@ class MainActivity : AppCompatActivity() {
         }
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+        try {
+            val pInfo = packageManager.getPackageInfo(packageName, 0)
+            toolbar.subtitle = "v${pInfo.versionName}"
+        } catch (_: Exception) {}
 
         loadingIndicator = findViewById(R.id.loadingIndicator)
 
